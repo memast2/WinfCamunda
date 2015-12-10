@@ -15,6 +15,7 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 public class PersistProcessPM implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private String currentUser = "test";
 
 	@EJB
 	private ProcessService service;
@@ -29,6 +30,16 @@ public class PersistProcessPM implements Serializable {
 	    		if(deleteName.length()>0){
 	    	    	// we delete a task
 	    			service.deleteProcess((String)variables.get("delete"));
+	    		}
+	    	}
+	    }
+	    
+	    if(variables.containsKey("user")){
+	    	String userName = (String)variables.get("user");
+	    	if(userName!=null){
+	    		if(userName.length()>0){
+		    	    currentUser = userName;
+	    			
 	    		}
 	    	}
 	    }
@@ -52,6 +63,30 @@ public class PersistProcessPM implements Serializable {
 	public List<ProcessEntity> getProcessList() {
 		
 		return service.getCompleteProcessList();
+	}
+	
+	public String getCurrentUser() {
+		
+		return currentUser;
+	}
+	
+	public User[] getUsers() {
+		 User[] users = new User[3];
+	     users[0] = new User();
+	     
+	     users[0].setName("Hans");
+	     users[0].setRole("Mitarbeiter");
+		 
+	     users[1] = new User();
+	     
+	     users[1].setName("Bernhard");
+	     users[1].setRole("Mitarbeiter");
+	     
+	     users[2] = new User();
+	     
+	     users[2].setName("Angela");
+	     users[2].setRole("Projektleiter");
+	     return users;
 	}
 	
 	

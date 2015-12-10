@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view>
+	<f:metadata>
+		<!-- Start a new process instance. The Process Definition Key is read internally from
+         request parameters and cached in the CDI conversation scope.
+    -->
+		<f:event type="preRenderView"
+			listener="#{camundaTaskForm.startTaskForm()}" />
+	</f:metadata>
+	<h:head>
+		<title>Aufgabenverwaltung</title>
+	</h:head>
+	<h:body>
+		<h:form id="submitForm">
+		<h2>Neue Aufgabe erstellen</h2>
+			<p>Bitte geben Sie den Namen und Beschreibung einer Aufgabe ein, um sie zu erstellen.</p>
+			<h:panelGrid columns="1">
+
+
+				<label for="taskName">Name</label>
+				<!-- create process variables using the processVariables map. -->
+				<h:inputText id="taskName" value="#{processVariables['task']}" />
+
+
+				<label for="description">Beschreibung</label>
+				<!-- create process variables using the processVariables map. -->
+				<h:inputText id="description" value="#{processVariables['description']}" />
+
+
+			</h:panelGrid>
+
+			<!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
+
+           NOTE: Syntax is different when working on user task forms, see file "approveLoanRequest.xhtml".
+      -->
+      
+		<br />
+     	<p style="font-style: italic; font-weight: bold;">Oder</p>
+		
+		<h2>Aufgabe abarbeiten</h2>
+			<h:panelGrid columns="1">
+				<p>Bitte geben Sie den Namen einer Aufgabe ein, um sie abzuarbeiten.</p>
+				
+				<label for="delete">Name</label>
+				
+				<h:inputText id="delete" value="#{processVariables['delete']}" />
+				
+			</h:panelGrid>
+			
+		<!-- Submit -->
+		<br /><br />
+		<h:commandButton id="submit_button" value="Ausführen" action="#{camundaTaskForm.completeTask()}" />
+		
+		<!-- Error Messages -->
+		<br />
+		<h:messages style="color:red;margin:8px;font-weight:bold;" />
+		</h:form>
+		<br />
+		
+		<!-- Hint -->
+		<p style="font-style: italic;">Hinweis: Falls im Bereich "Neue Aufgabe erstellen" beide Felder ausgefüllt sind, wird die spezifizierte Aufgabe erstellt.
+		<br />
+		Falls im Bereich "Aufgabe arbeiten" das Feld ausgefüllt ist, so wird die spezifizierte Aufgabe beendet.
+		<br />
+		Falls Sie keine neue Aufgabe erstellen oder abarbeiten wollen, lassen Sie die jeweiligen Felder einfach leer.</p>
+		
+		<hr />
+		
+		<h2>Aktive Aufgaben</h2>
+		<h:dataTable var="process"
+			value="#{persistProcessPM.processList}">
+			<h:column>
+				<f:facet name="header">Aufgabe</f:facet>
+				#{process.task}
+   			</h:column>
+   			<h:column>
+				<f:facet name="header">Beschreibung</f:facet>
+				#{process.description}
+   			</h:column>
+		</h:dataTable>
+	</h:body>
+</f:view>
+</html>

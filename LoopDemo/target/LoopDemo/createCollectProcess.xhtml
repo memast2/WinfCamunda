@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view>
+	<f:metadata>
+		<!-- Start a new process instance. The Process Definition Key is read internally from
+         request parameters and cached in the CDI conversation scope.
+    -->
+		<f:event type="preRenderView"
+			listener="#{camundaTaskForm.startProcessInstanceByKeyForm()}" />
+	</f:metadata>
+	<h:head>
+		<title>Aufgabenverwaltung Prozess erstellen</title>
+	</h:head>
+	<h:body>
+		<h1>Starte Aufgabenverwaltung</h1>
+		<h:form id="submitForm">
+			<h:commandButton id="submit_button" value="Neue Aufgabenverwaltung"
+				action="#{camundaTaskForm.completeProcessInstanceForm()}" />
+
+			<h:messages style="color:red;margin:8px;" />
+		</h:form>
+	</h:body>
+</f:view>
+</html>

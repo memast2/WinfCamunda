@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view>
+	<f:metadata>
+		<!-- Start a new process instance. The Process Definition Key is read internally from
+         request parameters and cached in the CDI conversation scope.
+    -->
+		<f:event type="preRenderView"
+			listener="#{camundaTaskForm.startTaskForm()}" />
+	</f:metadata>
+	<h:head>
+		<title>Choose User</title>
+	</h:head>
+	<h:body>
+		<h:form id="submitForm">
+			<h2>User auswählen</h2>
+			<p>Bitte wählen sie den Benutzer aus</p>
+			<h:panelGrid columns="1">
+
+				<label for="user">Benutzer</label>
+				<h:selectOneMenu id="user" value="#{processVariables['user']}">
+					<f:selectItem itemValue="Manuel" itemLabel="Manuel" />
+					<f:selectItem itemValue="Jasmin" itemLabel="Jasmin" />
+				</h:selectOneMenu>
+				
+				<h:selectOneMenu
+			    value="#{processVariables['user']}" id="user2">
+			    <f:selectItems value="#{persistProcessPM.users}" var="user" itemValue="#{user.name}" itemLabel="#{user.name} (#{user.role})" />
+			    </h:selectOneMenu>
+
+			</h:panelGrid>
+
+			<!-- Submit -->
+			<br />
+			<br />
+			<h:commandButton id="submit_button" value="Wählen"
+				action="#{camundaTaskForm.completeTask()}" />
+
+			<!-- Error Messages -->
+			<br />
+			<h:messages style="color:red;margin:8px;font-weight:bold;" />
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>
